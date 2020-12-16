@@ -9,7 +9,7 @@ db.once('open', function() {
 });
 
 const userSchema = new mongoose.Schema({
-  githubProfile: String
+  githubProfile: ''
 });
 
 export const User = mongoose.model('User', userSchema);

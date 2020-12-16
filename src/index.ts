@@ -11,11 +11,7 @@ const app = express();
 const keys = [process.env.COOKIE_KEY || 'asdf'];
 const port = 4050;
 
-app.use(
-  cookieSession({
-    keys,
-  })
-);
+app.use(cookieSession({ keys }));
 
 app.get('/auth/github', (req: Request, res: Response) => {
   res.redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`);
@@ -37,7 +33,7 @@ app.get('/auth/github/callback', async (req: Request, res: Response) => {
 
     let user = await User.findOne({ githubProfile: id });
     if (!user) {
-      user = new User({ githubProfile: id});
+      user = new User({ githubProfile: JSON.parse(id) });
       await user.save();
     }
 
